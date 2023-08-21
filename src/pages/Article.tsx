@@ -6,8 +6,8 @@ import { Tree, Space, Popconfirm, Spin, Button, Drawer, Form, Input, message } f
 import type { DirectoryTreeProps } from 'antd/es/tree';
 import { ReduxContext } from '../redux';
 import { serviceAxios } from '../utils';
-import Editor from './components/Editor';
-import Preview from './components/Preview';
+import Editor from './components/VEditor';
+import Preview from './components/VPreview';
 
 const { DirectoryTree } = Tree;
 const Home = () => {
@@ -74,7 +74,7 @@ const Home = () => {
     serviceAxios
       .delete(`/tree/${state.article?.id}`)
       .then(() => {
-        getAll();
+        window.location.reload();
       })
       .catch(() => {
         dispatch({ type: 'UPDATE', payload: { loading: false } });
@@ -101,7 +101,7 @@ const Home = () => {
         })
         .finally(() => {
           setOpen(false);
-          getAll();
+          window.location.reload();
         });
     }
   };
@@ -192,7 +192,7 @@ const Home = () => {
                     </Form.Item>
 
                     <Form.Item>
-                      <Button type="primary" htmlType="submit">
+                      <Button loading={state.loading} type="primary" htmlType="submit">
                         保存
                       </Button>
                     </Form.Item>
@@ -226,7 +226,7 @@ const Home = () => {
                     </Form.Item>
 
                     <Form.Item>
-                      <Button type="primary" htmlType="submit">
+                      <Button loading={state.loading} type="primary" htmlType="submit">
                         保存
                       </Button>
                     </Form.Item>

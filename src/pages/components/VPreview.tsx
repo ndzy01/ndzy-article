@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Vditor from 'vditor';
-import 'vditor/dist/index.css';
 import { generateUUID } from './utils';
 import { useLayoutEffect } from 'react';
 
