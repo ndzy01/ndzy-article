@@ -53,6 +53,12 @@ const Home = () => {
     setEditType('1');
   };
 
+  const goCreateRoot = () => {
+    dispatch({ type: 'UPDATE', payload: { article: undefined } });
+    setOpen(true);
+    setEditType('0');
+  };
+
   const goCreate = () => {
     setOpen(true);
     setEditType('0');
@@ -126,13 +132,7 @@ const Home = () => {
         articles.length > 0 && (
           <>
             <Space>
-              <Button
-                onClick={() => {
-                  dispatch({ type: 'UPDATE', payload: { article: undefined } });
-                }}
-              >
-                清空
-              </Button>
+              <Button onClick={goCreateRoot}>新增根目录</Button>
               <Button onClick={goCreate}>新增</Button>
               <Button onClick={goEdit}>编辑</Button>
               <Popconfirm title="删除将无法恢复,确定删除?" onConfirm={del}>

@@ -7,7 +7,7 @@ loader.config({ monaco });
 const IEditor = ({ value, onChange }: any) => {
   return (
     <Editor
-      height="80vh"
+      height="60vh"
       theme="vs-dark"
       defaultLanguage="markdown"
       language="markdown"
