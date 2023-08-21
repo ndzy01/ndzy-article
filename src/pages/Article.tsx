@@ -50,6 +50,7 @@ const Home = () => {
   const goEdit = () => {
     if (!state.article?.id || !state.article?.isLeaf) {
       message.warning('请选择您要更新的文章');
+
       return;
     }
 
@@ -64,6 +65,12 @@ const Home = () => {
   };
 
   const goCreate = () => {
+    if (!state.article?.id) {
+      message.warning('请先选择一篇文章');
+
+      return;
+    }
+
     setOpen(true);
     setEditType('0');
   };

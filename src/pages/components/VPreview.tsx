@@ -28,7 +28,7 @@ const Preview = ({ md }: { md: string }) => {
     });
   }, [md]);
 
-  return <div id={`preview-${id}`} className="ndzy-preview" />;
+  return <div id={`preview-${id}`} />;
 };
 
 export default Preview;
