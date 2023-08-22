@@ -15,6 +15,7 @@ const Home = () => {
   const [articles, setArticles] = useState([]);
   const [open, setOpen] = useState(false);
   const [editType, setEditType] = useState('0');
+  const [loading, setLoading] = useState(false);
 
   const arrayToTree = (list: ITree[], root: string): any => {
     return list
@@ -89,6 +90,8 @@ const Home = () => {
   };
 
   const update = (values: any) => {
+    setLoading(true);
+
     if (editType === '0') {
       serviceAxios
         .post('/tree', {
@@ -99,6 +102,7 @@ const Home = () => {
         .finally(() => {
           setOpen(false);
           getAll();
+          setLoading(false);
         });
     } else if (editType === '1') {
       serviceAxios
@@ -108,6 +112,8 @@ const Home = () => {
         })
         .finally(() => {
           setOpen(false);
+          setLoading(false);
+
           window.location.reload();
         });
     }
@@ -134,7 +140,7 @@ const Home = () => {
           <>
             <Space>
               <Button onClick={goCreateRoot}>新增根目录</Button>
-              <Button onClick={goCreate}>新增</Button>
+              <Button onClick={goCreate}>新增子目录</Button>
               <Button onClick={goEdit}>编辑</Button>
               {state.article?.id && state.article.isLeaf && (
                 <Popconfirm title="删除将无法恢复,确定删除?" onConfirm={del}>
@@ -233,7 +239,7 @@ const Home = () => {
                     </Form.Item>
 
                     <Form.Item>
-                      <Button loading={state.loading} type="primary" htmlType="submit">
+                      <Button loading={loading} type="primary" htmlType="submit">
                         保存
                       </Button>
                     </Form.Item>
