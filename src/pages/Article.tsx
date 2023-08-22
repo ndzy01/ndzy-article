@@ -205,7 +205,7 @@ const Home = () => {
                     </Form.Item>
 
                     <Form.Item>
-                      <Button loading={state.loading} type="primary" htmlType="submit">
+                      <Button loading={loading} type="primary" htmlType="submit">
                         保存
                       </Button>
                     </Form.Item>
