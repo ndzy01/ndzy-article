@@ -1,7 +1,7 @@
 import Vditor from 'vditor';
+import { useInterval } from 'ahooks';
 import { generateUUID } from './utils';
 import { useResponsive } from '../../hooks';
-import { useInterval } from 'ahooks';
 
 const Editor = ({
   value,
@@ -14,7 +14,6 @@ const Editor = ({
 }) => {
   const id = generateUUID();
   const responsive = useResponsive();
-
   const clear = useInterval(() => {
     if (document.getElementById(`vditor-${id}`)) {
       new Vditor(`vditor-${id}`, {
@@ -57,7 +56,6 @@ const Editor = ({
           onChange && onChange(v);
         },
         outline: {
-          // 显示大纲
           enable: true,
           position: 'left',
         },
@@ -65,7 +63,6 @@ const Editor = ({
         placeholder,
         value: value || '',
       });
-
       clear();
     }
   }, 100);
