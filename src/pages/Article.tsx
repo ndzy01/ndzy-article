@@ -8,6 +8,7 @@ import { ReduxContext } from '../redux';
 import { serviceAxios } from '../utils';
 import Editor from './components/VEditor';
 import Preview from './components/VPreview';
+import Login from './components/Login';
 
 const { DirectoryTree } = Tree;
 const Home = () => {
@@ -16,6 +17,18 @@ const Home = () => {
   const [open, setOpen] = useState(false);
   const [editType, setEditType] = useState('0');
   const [loading, setLoading] = useState(false);
+  const initUser = () => {
+    dispatch({ type: 'UPDATE', payload: { loading: true } });
+    serviceAxios
+      .get('/users')
+      .then((res) => {
+        dispatch({ type: 'UPDATE', payload: { user: res.data, loading: false } });
+      })
+      .catch(() => {
+        dispatch({ type: 'UPDATE', payload: { loading: false } });
+      });
+  };
+
   const arrayToTree = (list: ITree[], root: string): any => {
     return list
       .filter((item) => item.pId === root)
@@ -105,6 +118,7 @@ const Home = () => {
     dispatch({ type: 'UPDATE', payload: { article: info.node as unknown as ITree } });
   const onClose = () => setOpen(false);
   useMount(() => {
+    initUser();
     getAll();
   });
 
@@ -112,18 +126,21 @@ const Home = () => {
     <Spin />
   ) : (
     <div>
-      <Space>
-        <Button onClick={goCreateRoot}>新增根目录</Button>
-        <Button onClick={goCreate}>新增子目录</Button>
-        <Button onClick={goEdit}>编辑</Button>
-        {state.article?.id && state.article.isLeaf && (
-          <Popconfirm title="删除将无法恢复,确定删除?" onConfirm={del}>
-            <Button>删除</Button>
-          </Popconfirm>
-        )}
-      </Space>
+      <Login />
+      {state.user?.role !== '2' && (
+        <Space>
+          <Button onClick={goCreateRoot}>新增根目录</Button>
+          <Button onClick={goCreate}>新增子目录</Button>
+          <Button onClick={goEdit}>编辑</Button>
+          {state.article?.id && state.article.isLeaf && (
+            <Popconfirm title="删除将无法恢复,确定删除?" onConfirm={del}>
+              <Button>删除</Button>
+            </Popconfirm>
+          )}
+        </Space>
+      )}
       {articles.length > 0 && (
-        <>
+        <div>
           <DirectoryTree
             selectedKeys={state.article?.id ? [state.article?.id] : []}
             onSelect={onSelect}
@@ -132,7 +149,7 @@ const Home = () => {
             treeData={articles}
           />
           {state.article?.content && <Preview md={state.article?.content} />}
-        </>
+        </div>
       )}
       {open && (
         <Drawer
