@@ -3,7 +3,6 @@ import { createContext } from 'react';
 interface State {
   loading: boolean;
   article?: ITree;
-  user?: User;
 }
 
 interface Action {

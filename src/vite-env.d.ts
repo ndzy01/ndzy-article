@@ -8,12 +8,3 @@ interface ITree {
   isLeaf: boolean;
   children: ITree[];
 }
-
-interface User {
-  id: string;
-  nickname: string;
-  name: string;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
-}
