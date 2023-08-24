@@ -84,9 +84,13 @@ const Home = () => {
           content: values.content,
           pId: state.article?.id ? state.article?.id : '0',
         })
-        .finally(() => {
+        .then(() => {
           setOpen(false);
           getAll();
+          setLoading(false);
+        })
+        .catch(() => {
+          setOpen(false);
           setLoading(false);
         });
     } else if (editType === '1') {
@@ -95,10 +99,12 @@ const Home = () => {
           name: values.name,
           content: values.content,
         })
-        .finally(() => {
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(() => {
           setOpen(false);
           setLoading(false);
-          window.location.reload();
         });
     }
   };
